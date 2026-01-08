@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.0; 
+contract EtherTransfer 
+{ 
+address public sender; 
+address public receiver; 
+uint public amount; 
+function sendEther(address payable _receiver) public payable { 
+require(msg.value > 0, "You must send some Ether"); 
+sender = msg.sender; 
+receiver = _receiver; 
+amount = msg.value; 
+_receiver.transfer(msg.value); 
+} 
+function getDetails() public view returns (address, address, uint) { 
+return (sender, receiver, amount); 
+} 
+function getReceiverBalance() public view returns (uint) { 
+return address(receiver).balance; 
+} 
+function getSenderBalance() public view returns (uint) { 
+return address(sender).balance; 
+}  } 
+
+------------------------------------------------------------------------------------------------------
+
+const prompt=require("prompt-sync")() 
+const { generateKeyPairSync, createSign, createVerify } = require("crypto"); 
+const { publicKey, privateKey } = generateKeyPairSync("rsa", 
+{ 
+modulusLength: 2048, 
+}); 
+let msg = prompt("Enter a message:"); 
+const sign = createSign("SHA256"); 
+sign.update(msg); 
+sign.end(); 
+const signature = sign.sign(privateKey, "hex"); 
+console.log("Digital Signature created for the message:"+msg) 
+msg = prompt("Enter message to verify:"); 
+const verify = createVerify("SHA256"); 
+verify.update(msg); 
+verify.end(); 
+console.log("Signature Verified:", verify.verify(publicKey,signature, "hex")); 

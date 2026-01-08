@@ -1,0 +1,46 @@
+A.sol 
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.0; 
+contract A 
+{ 
+function showA()external pure returns(string memory) 
+{ 
+return "Hello from A"; 
+} 
+} 
+B.sol 
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.0; 
+import "./A.sol"; 
+contract B 
+{ 
+A a1; 
+constructor(address _a1) 
+{ 
+a1 = A(_a1); 
+} 
+function showB()public view returns(string memory) 
+{ 
+return a1.showA(); 
+}  } 
+
+------------------------------------------------------------------------------------------------
+
+#digitalsign
+const prompt=require("prompt-sync")() 
+const { generateKeyPairSync, createSign, createVerify } = require("crypto"); 
+const { publicKey, privateKey } = generateKeyPairSync("rsa", 
+{ 
+modulusLength: 2048, 
+}); 
+let msg = prompt("Enter a message:"); 
+const sign = createSign("SHA256"); 
+sign.update(msg); 
+sign.end(); 
+const signature = sign.sign(privateKey, "hex"); 
+console.log("Digital Signature created for the message:"+msg) 
+msg = prompt("Enter message to verify:"); 
+const verify = createVerify("SHA256"); 
+verify.update(msg); 
+verify.end(); 
+console.log("Signature Verified:", verify.verify(publicKey,signature, "hex")); 

@@ -1,0 +1,18 @@
+#encryption and decryption
+touch plaintext.txt 
+open plaintext.txt 
+openssl enc -aes256 -salt -in plaintext.txt -out encrypted.enc 
+Passphrase:12345678
+
+openssl enc -d -aes256 -in encrypted.enc -out decrypted.txt 
+Passphrase:12345678 
+
+---------------------------------------------------------------------------------
+#digital sign
+touch demo.txt 
+open demo.txt
+openssl genpkey -algorithm RSA -out private_key.pem -aes256 
+Passphrase:1234 
+openssl rsa -in private_key.pem -pubout -out public_key.pem 
+Passphrase:1234 
+ 

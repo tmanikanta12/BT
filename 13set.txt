@@ -1,0 +1,33 @@
+#contract
+A.sol 
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.0; 
+contract A 
+{ 
+function showA()external pure returns(string memory) 
+{ 
+return "Hello from A"; 
+} 
+} 
+B.sol 
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.0; 
+import "./A.sol"; 
+contract B 
+{ 
+A a1; 
+constructor(address _a1) 
+{ 
+a1 = A(_a1); 
+} 
+function showB()public view returns(string memory) 
+{ 
+return a1.showA(); 
+}  }
+-------------------------------------------------------------------------------------------------
+
+#public to private
+openssl genpkey -algorithm RSA -out private_key.pem -aes256 
+Passphrase:1234 
+openssl rsa -in private_key.pem -pubout -out public_key.pem 
+Passphrase:1234 
